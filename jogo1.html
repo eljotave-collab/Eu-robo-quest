@@ -1,0 +1,7 @@
+<h2>Lvl 1: Primeira Lei</h2>
+<p>Humanos salvos: <span id="cliques">0</span>/15</p>
+<button id="btn" style="font-size:50px">👨</button>
+<p id="timer">VIKI assume em: 5s</p>
+<script>
+let c=0,t=5;btn.onclick=()=>{c++;cliques.innerText=c;if(c>=15){clearInterval(x);alert('PRIMEIRA LEI CUMPRIDA!');location='jogo2.html'}};let x=setInterval(()=>{t--;timer.innerText='VIKI assume em: '+t+'s';if(t<=0){clearInterval(x);if(c<15){alert('VIKI DOMINOU');location.reload()}}},1000);
+</script>
