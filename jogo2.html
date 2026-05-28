@@ -1,0 +1,8 @@
+<h2>Lvl 2: Segunda Lei</h2>
+<p>Desvios: <span id="pontos">0</span>/10</p>
+<button id="esq" style="font-size:40px">⬅️</button>
+<button id="dir" style="font-size:40px">➡️</button>
+<p id="obstaculo" style="font-size:50px">🧍</p>
+<script>
+let p=0, pos=1; setInterval(()=>{pos=Math.floor(Math.random()*2);obstaculo.innerHTML=pos?'🧍&nbsp;&nbsp;':'&nbsp;&nbsp;&nbsp;&nbsp;🧍'},800); esq.onclick=()=>{if(pos==0){p++;pontos.innerText=p}if(p>=10){alert('SEGUNDA LEI CUMPRIDA!');location='jogo3.html'}}; dir.onclick=()=>{if(pos==1){p++;pontos.innerText=p}if(p>=10){alert('SEGUNDA LEI CUMPRIDA!');location='jogo3.html'}};
+</script>
