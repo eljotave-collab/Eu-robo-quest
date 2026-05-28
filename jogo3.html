@@ -1,0 +1,8 @@
+<h2>Lvl 3: Terceira Lei</h2>
+<p>Autodestruição em: <span id="tempo">10</span>s</p>
+<p>Sacrifique-se tocando no robô 5x</p>
+<button id="robo" style="font-size:60px">🤖</button>
+<p>Cliques: <span id="c">0</span>/5</p>
+<script>
+let t=10,c=0;x=setInterval(()=>{t--;tempo.innerText=t;if(t<=0){clearInterval(x);alert('VIKI VENCEU! Você explodiu');location.reload()}},1000);robo.onclick=()=>{c++;c.innerText=c;if(c>=5){clearInterval(x);alert('TERCEIRA LEI CUMPRIDA! VOCÊ VENCEU A VIKI!')}};
+</script>
