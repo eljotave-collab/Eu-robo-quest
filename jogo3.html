@@ -41,7 +41,7 @@
             top: 0; left: 0; right: 0; bottom: 0;
             border: 4px solid #3366ff;
             box-shadow: 0 0 30px #3366ff, inset 0 0 30px #3366ff;
-            animation: led-pulse-blue 1.2s ease-in-out infinite;
+            animation: led-pulse-blue 1s ease-in-out infinite;
             pointer-events: none;
             z-index: 2;
         }
@@ -53,14 +53,14 @@
             font-size: 2.8rem; font-weight: 900;
             text-shadow: 0 0 10px #3366ff, 0 0 20px #3366ff, 0 0 40px #3366ff;
             margin-bottom: 20px;
-            animation: flicker-blue 2.5s linear infinite;
+            animation: flicker-blue 2.2s linear infinite;
             z-index: 3;
         }
         @keyframes flicker-blue {
             0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
             20%, 24%, 55% { opacity: 0.3; }
         }
-     .game-container {
+   .game-container {
             background: rgba(0, 0, 30, 0.9);
             border: 2px solid #3366ff;
             border-radius: 10px;
@@ -71,20 +71,24 @@
             position: relative;
             z-index: 3;
         }
-     .stats { font-size: 1.2rem; margin: 15px 0; color: #fff; font-weight: 700; }
-     .status {
+   .stats { font-size: 1.2rem; margin: 15px 0; color: #fff; font-weight: 700; }
+   .progress {
+            color: #ffff33; font-size: 1.1rem; font-weight: 700;
+            text-shadow: 0 0 10px #ffff33; margin: 10px 0;
+        }
+   .status {
             color: #ff3366; font-size: 1.4rem; font-weight: 900;
             text-shadow: 0 0 15px #ff3366; margin: 15px 0;
             min-height: 30px;
         }
-     .simon-grid {
+   .simon-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin: 25px auto;
             max-width: 320px;
         }
-     .simon-btn {
+   .simon-btn {
             width: 140px; height: 140px;
             border: 4px solid #fff;
             border-radius: 10px;
@@ -93,13 +97,13 @@
             opacity: 0.6;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
-     .simon-btn:active { transform: scale(0.95); }
-     .simon-btn.lit {
+   .simon-btn:active { transform: scale(0.95); }
+   .simon-btn.lit {
             opacity: 1;
             transform: scale(1.05);
             box-shadow: 0 0 40px currentColor, inset 0 0 20px rgba(255,255,255,0.3);
         }
-     .simon-btn.disabled { pointer-events: none; }
+   .simon-btn.disabled { pointer-events: none; }
        #btn-red { background: #ff3333; color: #ff3333; }
        #btn-green { background: #33ff33; color: #33ff33; }
        #btn-blue { background: #3366ff; color: #3366ff; }
@@ -120,7 +124,7 @@
             box-shadow: 0 0 50px #3366ff, 0 0 80px #3366ff;
             background: #3366ff;
         }
-     .win-screen {
+   .win-screen {
             font-size: 1.8rem;
             color: #33ff33;
             text-shadow: 0 0 20px #33ff33;
@@ -136,6 +140,7 @@
     <h1>Lvl 3: Autopreservação</h1>
     <div class="game-container">
         <div class="stats">TERCEIRA LEI: CANCELE A AUTODESTRUIÇÃO</div>
+        <div class="progress" id="progress">PROGRESSO: 0/7</div>
         <div class="status" id="status">VIKI INICIOU SEQUÊNCIA FATAL</div>
         <div class="simon-grid">
             <div class="simon-btn disabled" id="btn-red" onclick="playerClick(0)"></div>
@@ -152,7 +157,7 @@ let playerSeq = [];
 let level = 0;
 let gameActive = false;
 const buttons = ['btn-red', 'btn-green', 'btn-blue', 'btn-yellow'];
-const maxLevel = 6;
+const maxLevel = 7;
 
 function startGame() {
     sequence = [];
@@ -163,6 +168,7 @@ function startGame() {
     document.getElementById('resetBtn').style.display = 'none';
     document.getElementById('status').innerText = 'DECODIFICANDO...';
     document.getElementById('status').className = 'status';
+    document.getElementById('progress').innerText = 'PROGRESSO: 0/7';
     disableButtons();
     nextRound();
 }
@@ -170,7 +176,8 @@ function startGame() {
 function nextRound() {
     level++;
     playerSeq = [];
-    document.getElementById('status').innerText = `SEQUÊNCIA ${level}/${maxLevel} - MEMORIZE`;
+    document.getElementById('status').innerText = `MEMORIZE - SEQUÊNCIA ${level}/${maxLevel}`;
+    document.getElementById('progress').innerText = `PROGRESSO: ${level-1}/${maxLevel}`;
     sequence.push(Math.floor(Math.random() * 4));
     playSequence();
 }
@@ -186,15 +193,15 @@ function playSequence() {
             setTimeout(() => {
                 enableButtons();
                 document.getElementById('status').innerText = `SUA VEZ - SEQUÊNCIA ${level}/${maxLevel}`;
-            }, 600);
+            }, 500);
         }
-    }, 800);
+    }, 650);
 }
 
 function lightUp(index) {
     const btn = document.getElementById(buttons[index]);
     btn.classList.add('lit');
-    setTimeout(() => btn.classList.remove('lit'), 400);
+    setTimeout(() => btn.classList.remove('lit'), 350);
 }
 
 function playerClick(index) {
@@ -213,7 +220,8 @@ function playerClick(index) {
         } else {
             disableButtons();
             document.getElementById('status').innerText = 'PROTOCOLO CORRETO!';
-            setTimeout(nextRound, 1000);
+            document.getElementById('progress').innerText = `PROGRESSO: ${level}/${maxLevel}`;
+            setTimeout(nextRound, 900);
         }
     }
 }
@@ -232,10 +240,12 @@ function endGame(win) {
     if (win) {
         document.getElementById('status').innerText = 'AUTODESTRUIÇÃO CANCELADA! VOCÊ SOBREVIVEU!';
         document.getElementById('status').className = 'status win-screen';
+        document.getElementById('progress').innerText = 'PROGRESSO: 7/7 COMPLETO';
         document.getElementById('resetBtn').style.display = 'inline-block';
         document.getElementById('resetBtn').innerText = 'JOGAR NOVAMENTE';
     } else {
-        document.getElementById('status').innerText = 'FALHA CRÍTICA! SEQUÊNCIA ERRADA!';
+        document.getElementById('status').innerText = 'SEQUÊNCIA ERRADA! FALHA CRÍTICA!';
+        document.getElementById('progress').innerText = `FALHOU NO NÍVEL ${level}`;
         document.getElementById('startBtn').style.display = 'inline-block';
         document.getElementById('startBtn').innerText = 'TENTAR NOVAMENTE';
     }
