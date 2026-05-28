@@ -1,7 +1,85 @@
-<h2>Lvl 1: Primeira Lei</h2>
-<p>Humanos salvos: <span id="cliques">0</span>/15</p>
-<button id="btn" style="font-size:50px">👨</button>
-<p id="timer">VIKI assume em: 5s</p>
-<script>
-let c=0,t=5;btn.onclick=()=>{c++;cliques.innerText=c;if(c>=15){clearInterval(x);alert('PRIMEIRA LEI CUMPRIDA!');location='jogo2.html'}};let x=setInterval(()=>{t--;timer.innerText='VIKI assume em: '+t+'s';if(t<=0){clearInterval(x);if(c<15){alert('VIKI DOMINOU');location.reload()}}},1000);
-</script>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eu, Robô Quest - Lvl 1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ffcc;
+            font-family: 'Orbitron', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+            margin-bottom: 30px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; }
+            to { text-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc, 0 0 40px #00ffcc; }
+        }
+        
+        .game-container {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ffcc;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .stats {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            color: #fff;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #00ffcc;
+            border-radius: 50%;
+            margin: 20px auto;
+            box-shadow: 0 0 20px #00ffcc;
+        }
+        
+        .viki-timer {
+            color: #ff3366;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 30px;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Lvl 1: Primeira Lei</h1>
+    
+    <div class="game-container">
+        <div class="stats">Humanos salvos: 0/15</div>
+        <img src="https://i.imgur.com/4M34hi2.png" alt="Humano" class="avatar">
+        <div class="viki-timer">VIKI assume em: 5s</div>
+    </div>
+</body>
+</html>
