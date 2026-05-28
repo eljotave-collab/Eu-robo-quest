@@ -5,81 +5,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eu, Robô Quest - Lvl 2</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            color: #00ffcc;
-            font-family: 'Orbitron', sans-serif;
+            background: #000;
+            color: #33ff33; 
+            font-family: 'Orbitron', sans-serif; 
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
             justify-content: center;
-            padding: 20px;
-            text-align: center;
+            padding: 20px; 
+            text-align: center; 
+            overflow: hidden;
+            position: relative;
         }
-        
-        h1 {
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-            margin-bottom: 30px;
-            animation: glow 2s ease-in-out infinite alternate;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15) 0px,
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1;
         }
-        
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; }
-            to { text-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc, 0 0 40px #00ffcc; }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 4px solid #33ff33;
+            box-shadow: 0 0 20px #33ff33, inset 0 0 20px #33ff33;
+            animation: led-pulse 1.5s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
         }
-        
-        .game-container {
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #00ffcc;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
-            max-width: 500px;
-            width: 100%;
+        @keyframes led-pulse {
+            0%, 100% { opacity: 0.6; box-shadow: 0 0 20px #33ff33, inset 0 0 20px #33ff33; }
+            50% { opacity: 1; box-shadow: 0 0 40px #33ff33, inset 0 0 40px #33ff33; }
         }
-        
-        .stats {
-            font-size: 1.3rem;
-            margin: 20px 0;
-            color: #fff;
+        h1 { 
+            font-size: 2.8rem; font-weight: 900;
+            text-shadow: 0 0 10px #33ff33, 0 0 20px #33ff33, 0 0 40px #33ff33; 
+            margin-bottom: 20px; 
+            animation: flicker 3s linear infinite;
+            z-index: 3;
         }
-        
-        .avatar {
-            width: 80px;
-            height: 80px;
-            border: 3px solid #00ffcc;
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.4; }
+        }
+        .game-container { 
+            background: rgba(0, 20, 0, 0.9); 
+            border: 2px solid #33ff33; 
+            border-radius: 10px; 
+            padding: 30px; 
+            box-shadow: 0 0 50px rgba(51, 255, 51, 0.5), inset 0 0 30px rgba(51, 255, 51, 0.1); 
+            max-width: 500px; width: 100%; 
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 3;
+        }
+        .led-strip {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        .led {
+            width: 12px; height: 12px;
+            background: #33ff33;
             border-radius: 50%;
-            margin: 20px auto;
-            box-shadow: 0 0 20px #00ffcc;
+            box-shadow: 0 0 15px #33ff33;
+            animation: led-blink 1s ease-in-out infinite;
         }
-        
-        .viki-timer {
-            color: #ff3366;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-top: 30px;
-            animation: pulse 1s infinite;
+        .led:nth-child(2) { animation-delay: 0.2s; }
+        .led:nth-child(3) { animation-delay: 0.4s; }
+        .led:nth-child(4) { animation-delay: 0.6s; }
+        .led:nth-child(5) { animation-delay: 0.8s; }
+        @keyframes led-blink {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .stats { font-size: 1.3rem; margin: 15px 0; color: #fff; font-weight: 700; }
+        .viki-timer { 
+            color: #ff3366; font-size: 1.6rem; font-weight: 900; margin: 15px 0; 
+            text-shadow: 0 0 15px #ff3366;
+            animation: danger-pulse 0.8s infinite;
+        }
+        @keyframes danger-pulse { 
+            0%, 100% { transform: scale(1); opacity: 1; } 
+            50% { transform: scale(1.05); opacity: 0.8; } 
+        }
+        button { 
+            background: linear-gradient(45deg, #33ff33, #00cc00); 
+            color: #000; border: 2px solid #33ff33; 
+            padding: 15px 35px; font-size: 1.2rem; 
+            font-family: 'Orbitron'; font-weight: 900; 
+            border-radius: 5px; cursor: pointer; margin: 10px; 
+            box-shadow: 0 0 25px #33ff33, inset 0 0 10px rgba(255,255,255,0.2); 
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+        button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 0 40px #33ff33, 0 0 60px #33ff33; 
+            background: #33ff33;
+        }
+        input { 
+            background: #000; 
+            border: 3px solid #33ff33; 
+            color: #33ff33; 
+            padding: 15px; 
+            font-size: 2.2rem; 
+            font-family: 'Orbitron'; 
+            font-weight: 700; 
+            text-align: center; 
+            border-radius: 5px; 
+            margin: 20px 0; 
+            width: 220px; 
+            box-shadow: 0 0 25px rgba(51, 255, 51, 0.5), inset 0 0 15px rgba(51, 255, 51, 0.2);
+            animation: input-glow 2s ease-in-out infinite;
+        }
+        @keyframes input-glow {
+            0%, 100% { box-shadow: 0 0 25px rgba(51, 255, 51, 0.5), inset 0 0 15px rgba(51, 255, 51, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(51, 255, 51, 0.8), inset 0 0 25px rgba(51, 255, 51, 0.4); }
+        }
+        input:focus { outline: none; }
+        input:disabled { 
+            opacity: 0.3; 
+            animation: none;
+            box-shadow: 0 0 10px rgba(51, 255, 51, 0.2);
+        }
+        #codeDisplay { 
+            font-size: 3rem; 
+            letter-spacing: 20px; 
+            margin: 25px 0; 
+            color: #fff; 
+            font-weight: 900; 
+            text-shadow: 0 0 20px #fff, 0 0 40px #33ff33;
+            animation: glitch 2s infinite;
+        }
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, -2px); }
+            98% { transform: translate(2px, 2px); }
         }
     </style>
 </head>
 <body>
     <h1>Lvl 2: Segunda Lei</h1>
-    
     <div class="game-container">
-        <div class="stats">Ordens cumpridas: 0/20</div>
-        <img src="https://i.imgur.com/8Km9tLL.png" alt="Comandante" class="avatar">
-        <div class="viki-timer">VIKI assume em: 4s</div>
+        <div class="led-strip">
+            <div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
+        </div>
+        <div class="stats">OBEDEÇA: DIGITE O CÓDIGO</div>
+        <div class="viki-timer" id="timer">TEMPO: 12s</div>
+        <div id="codeDisplay">****</div>
+        <input type="text" id="input" maxlength="4" placeholder="0000" disabled>
+        <br>
+        <div class="led-strip">
+            <div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
+        </div>
+        <button id="startBtn" onclick="startGame()">INICIAR PROTOCOLO</button>
+        <button id="nextBtn" onclick="location.href='jogo3.html'" style="display:none;">LVL 3 →</button>
     </div>
+<script>
+let code;
+let time = 12;
+let gameActive = false;
+let timerInterval;
+let input = document.getElementById('input');
+
+function startGame() {
+    code = Math.floor(1000 + Math.random() * 9000).toString();
+    time = 12;
+    gameActive = true;
+    document.getElementById('codeDisplay').innerText = code;
+    document.getElementById('startBtn').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('timer').style.color = '#ff3366';
+    document.getElementById('timer').innerText = `TEMPO: ${time}s`;
+    input.disabled = false;
+    input.value = '';
+    input.focus();
+    
+    timerInterval = setInterval(() => {
+        time--;
+        document.getElementById('timer').innerText = `TEMPO: ${time}s`;
+        if (time <= 0) {
+            endGame(false);
+        }
+    }, 1000);
+}
+
+input.onkeyup = () => {
+    if (!gameActive) return;
+    if (input.value === code) {
+        endGame(true);
+    }
+}
+
+function endGame(win) {
+    gameActive = false;
+    clearInterval(timerInterval);
+    input.disabled = true;
+    if (win) {
+        document.getElementById('timer').innerText = 'ORDEM CUMPRIDA!';
+        document.getElementById('timer').style.color = '#33ff33';
+        document.getElementById('timer').style.animation = 'none';
+        document.getElementById('nextBtn').style.display = 'inline-block';
+    } else {
+        document.getElementById('timer').innerText = 'FALHA NO PROTOCOLO!';
+        document.getElementById('startBtn').style.display = 'inline-block';
+        document.getElementById('startBtn').innerText = 'TENTAR NOVAMENTE';
+        document.getElementById('codeDisplay').innerText = '****';
+    }
+}
+</script>
 </body>
 </html>
