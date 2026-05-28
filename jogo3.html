@@ -1,8 +1,85 @@
-<h2>Lvl 3: Terceira Lei</h2>
-<p>Autodestruição em: <span id="tempo">10</span>s</p>
-<p>Sacrifique-se tocando no robô 5x</p>
-<button id="robo" style="font-size:60px">🤖</button>
-<p>Cliques: <span id="c">0</span>/5</p>
-<script>
-let t=10,c=0;x=setInterval(()=>{t--;tempo.innerText=t;if(t<=0){clearInterval(x);alert('VIKI VENCEU! Você explodiu');location.reload()}},1000);robo.onclick=()=>{c++;c.innerText=c;if(c>=5){clearInterval(x);alert('TERCEIRA LEI CUMPRIDA! VOCÊ VENCEU A VIKI!')}};
-</script>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eu, Robô Quest - Lvl 3</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #2e1a1a 50%, #3e1616 100%);
+            color: #ff3366;
+            font-family: 'Orbitron', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #ff3366, 0 0 20px #ff3366;
+            margin-bottom: 30px;
+            animation: glow-red 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow-red {
+            from { text-shadow: 0 0 10px #ff3366, 0 0 20px #ff3366; }
+            to { text-shadow: 0 0 20px #ff3366, 0 0 30px #ff3366, 0 0 40px #ff3366; }
+        }
+        
+        .game-container {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #ff3366;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .stats {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            color: #fff;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #ff3366;
+            border-radius: 50%;
+            margin: 20px auto;
+            box-shadow: 0 0 20px #ff3366;
+        }
+        
+        .viki-timer {
+            color: #00ffcc;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 30px;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Lvl 3: Terceira Lei</h1>
+    
+    <div class="game-container">
+        <div class="stats">Autopreservação: 100%</div>
+        <img src="https://i.imgur.com/7QpX1Zk.png" alt="Robô" class="avatar">
+        <div class="viki-timer">CONFRONTO COM VIKI: 3s</div>
+    </div>
+</body>
+</html>
