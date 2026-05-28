@@ -59,14 +59,14 @@
     <h1>Lvl 1: Primeira Lei</h1>
     <div class="game-container">
         <div class="stats" id="score">Humanos salvos: 0/15</div>
-        <div class="viki-timer" id="timer">VIKI assume em: 10s</div>
+        <div class="viki-timer" id="timer">VIKI assume em: 20s</div>
         <div id="gameArea"><div class="target" id="target"></div></div>
         <button id="startBtn" onclick="startGame()">INICIAR MISSÃO</button>
         <button id="nextBtn" onclick="location.href='jogo2.html'" style="display:none;">LVL 2 →</button>
     </div>
 <script>
 let score = 0;
-let time = 10;
+let time = 20;
 let gameActive = false;
 let timerInterval;
 let target = document.getElementById('target');
@@ -74,16 +74,20 @@ let gameArea = document.getElementById('gameArea');
 
 function startGame() {
     score = 0;
-    time = 10;
+    time = 20;
     gameActive = true;
     document.getElementById('startBtn').style.display = 'none';
     document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('timer').style.color = '#ff3366';
+    document.getElementById('timer').innerText = `VIKI assume em: ${time}s`;
     updateScore();
     spawnTarget();
     timerInterval = setInterval(() => {
         time--;
         document.getElementById('timer').innerText = `VIKI assume em: ${time}s`;
-        if (time <= 0) endGame();
+        if (time <= 0) {
+            endGame();
+        }
     }, 1000);
 }
 
